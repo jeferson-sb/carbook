@@ -1,12 +1,15 @@
 import { Specification } from '../../domain/Specification';
 import { SpecificationRepository } from '../../domain/SpecificationRepository';
+import { ApplicationService } from '../../lib/ApplicationService';
 
 interface SpecificationDTO {
   name: string;
   description: string;
 }
 
-export class CreateSpecificationService {
+export class CreateSpecificationService
+  implements ApplicationService<SpecificationDTO, void>
+{
   constructor(private specificationRepository: SpecificationRepository) {}
 
   execute({ name, description }: SpecificationDTO): void {

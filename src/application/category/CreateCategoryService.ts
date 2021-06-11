@@ -1,12 +1,15 @@
 import { Category } from '../../domain/Category';
 import { CategoryRepository } from '../../domain/CategoryRepository';
+import { ApplicationService } from '../../lib/ApplicationService';
 
 interface CategoryDTO {
   name: string;
   description: string;
 }
 
-export class CreateCategoryService {
+export class CreateCategoryService
+  implements ApplicationService<CategoryDTO, void>
+{
   constructor(private categoryRepository: CategoryRepository) {}
 
   execute({ name, description }: CategoryDTO): void {
