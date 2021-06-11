@@ -2,9 +2,9 @@ import { Router } from 'express';
 
 import SpecificationController from '../controllers/specification/SpecificationController';
 
-const specificationsRouter = Router();
+const specificationsRoutes = Router();
 const specificationController = new SpecificationController();
 
-specificationsRouter.post('/', specificationController.store);
+specificationsRoutes.post('/', specificationController.store);
 
-export default specificationsRouter;
+export default specificationsRoutes;
