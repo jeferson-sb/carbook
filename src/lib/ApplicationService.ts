@@ -1,3 +1,3 @@
 export interface ApplicationService<P, R> {
-  execute(payload: P): R;
+  execute(payload?: P): Promise<R>;
 }
