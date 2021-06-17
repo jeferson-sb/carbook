@@ -1,9 +1,6 @@
 import { Request, Response } from 'express';
 
-import { CreateCategoryService } from '../../../../application/category/CreateCategoryService';
-import { ImportCategoryService } from '../../../../application/category/ImportCategoryService';
-import { ListCategoryService } from '../../../../application/category/ListCategoryService';
-import { MemCategoryRepository } from '../../../../infra/category/MemCategoryRepository';
+import container from '../../container';
 
 class CategoryController {
   async store(request: Request, response: Response): Promise<Response> {
@@ -11,10 +8,9 @@ class CategoryController {
       // TODO: Validate data
       const { name, description } = request.body;
 
-      const categoryRepository = MemCategoryRepository.getInstance();
-      const categoryService = new CreateCategoryService(categoryRepository);
+      const { createCategoryService } = container.cradle;
 
-      categoryService.execute({ name, description });
+      await createCategoryService.execute({ name, description });
 
       return response.status(201).json({ status: 201 });
     } catch (error) {
@@ -22,24 +18,25 @@ class CategoryController {
     }
   }
 
-  findAll(request: Request, response: Response): Response {
-    const categoryRepository = MemCategoryRepository.getInstance();
-    const listCategoryService = new ListCategoryService(categoryRepository);
+  async findAll(request: Request, response: Response): Promise<Response> {
+    const { listCategoryService } = container.cradle;
 
-    const categories = listCategoryService.execute();
+    const categories = await listCategoryService.execute();
 
     return response.status(200).json({ status: 200, categories });
   }
 
-  import(request: Request, response: Response): Response {
-    const { file } = request;
-    const importCategoryService = new ImportCategoryService(
-      MemCategoryRepository.getInstance(),
-    );
+  async import(request: Request, response: Response): Promise<Response> {
+    try {
+      const { file } = request;
+      const { importCategoryService } = container.cradle;
 
-    importCategoryService.execute(file);
+      await importCategoryService.execute(file);
 
-    return response.sendStatus(200);
+      return response.sendStatus(201);
+    } catch (error) {
+      return response.sendStatus(500);
+    }
   }
 }
 

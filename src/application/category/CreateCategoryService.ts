@@ -1,19 +1,24 @@
 import { Category } from '../../domain/Category';
 import { CategoryRepository } from '../../domain/CategoryRepository';
 import { ApplicationService } from '../../lib/ApplicationService';
+import { CategoryDTO } from './payload/CategoryDTO';
 
-interface CategoryDTO {
-  name: string;
-  description: string;
-}
+type Dependencies = {
+  categoryRepository: CategoryRepository<Category>;
+};
 
 export class CreateCategoryService
   implements ApplicationService<CategoryDTO, void>
 {
-  constructor(private categoryRepository: CategoryRepository) {}
+  private categoryRepository: CategoryRepository<Category>;
 
-  execute({ name, description }: CategoryDTO): void {
-    const existingCategory = this.categoryRepository.findByName(name);
+  constructor({ categoryRepository }: Dependencies) {
+    this.categoryRepository = categoryRepository;
+  }
+
+  async execute({ name, description }: CategoryDTO): Promise<void> {
+    const existingCategory = await this.categoryRepository.findByName(name);
+
     if (existingCategory) {
       throw new Error('This category already exists.');
     }
@@ -24,6 +29,6 @@ export class CreateCategoryService
       description,
     });
 
-    this.categoryRepository.store(category);
+    await this.categoryRepository.store(category);
   }
 }

@@ -1,14 +1,22 @@
+import { ApplicationService } from '../../lib/ApplicationService';
 import { Category } from '../../domain/Category';
 import { CategoryRepository } from '../../domain/CategoryRepository';
-import { ApplicationService } from '../../lib/ApplicationService';
+
+type Dependencies = {
+  categoryRepository: CategoryRepository<Category>;
+};
 
 export class ListCategoryService
-  implements ApplicationService<any, Category[]>
+  implements ApplicationService<undefined, Category[]>
 {
-  constructor(private categoryRepository: CategoryRepository) {}
+  private categoryRepository: CategoryRepository<Category>;
 
-  execute(): Category[] {
-    const categories = this.categoryRepository.findAll();
+  constructor({ categoryRepository }: Dependencies) {
+    this.categoryRepository = categoryRepository;
+  }
+
+  async execute(): Promise<Category[]> {
+    const categories = await this.categoryRepository.findAll();
     return categories;
   }
 }

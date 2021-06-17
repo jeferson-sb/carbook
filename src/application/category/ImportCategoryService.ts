@@ -10,10 +10,18 @@ interface ImportCategory {
   description: string;
 }
 
+type Dependencies = {
+  categoryRepository: CategoryRepository<Category>;
+};
+
 export class ImportCategoryService
   implements ApplicationService<Express.Multer.File, void>
 {
-  constructor(private categoryRepository: CategoryRepository) {}
+  private categoryRepository: CategoryRepository<Category>;
+
+  constructor({ categoryRepository }: Dependencies) {
+    this.categoryRepository = categoryRepository;
+  }
 
   loadCategories(file: Express.Multer.File): Promise<ImportCategory[]> {
     return new Promise((resolve, reject) => {
@@ -42,12 +50,12 @@ export class ImportCategoryService
 
   async execute(file: Express.Multer.File): Promise<void> {
     const categories = await this.loadCategories(file);
-    categories.map((category) => {
+    categories.map(async (category) => {
       const { name, description } = category;
-      const existingCategory = this.categoryRepository.findByName(name);
+      const existingCategory = await this.categoryRepository.findByName(name);
 
       if (!existingCategory) {
-        this.categoryRepository.store(
+        await this.categoryRepository.store(
           Category.from({
             id: this.categoryRepository.getNextId(),
             name,
