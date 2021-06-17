@@ -1,27 +1,41 @@
+import { AggregateRoot } from '../lib/AggregateRoot';
+
 interface SpecificationData {
   id: string;
   name: string;
   description: string;
 }
 
-export class Specification {
-  private id: string;
+export class Specification implements AggregateRoot<string> {
+  private _id: string;
 
-  private name: string;
+  private _name: string;
 
-  private description: string;
+  private _description: string;
 
   constructor({ id, name, description }: SpecificationData) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
+    this._id = id;
+    this._name = name;
+    this._description = description;
+  }
+
+  get id(): string {
+    return this._id;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  get description(): string {
+    return this._description;
   }
 
   snapshot(): SpecificationData {
     return {
-      id: this.id,
-      name: this.name,
-      description: this.description,
+      id: this._id,
+      name: this._name,
+      description: this._description,
     };
   }
 }
