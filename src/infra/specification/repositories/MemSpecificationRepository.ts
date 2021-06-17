@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { Specification } from '../../domain/Specification';
-import { SpecificationRepository } from '../../domain/SpecificationRepository';
+import { Specification } from '../../../domain/Specification';
+import { SpecificationRepository } from '../../../domain/SpecificationRepository';
 
 export class MemSpecificationRepository implements SpecificationRepository {
   private specification: Specification[] = [];
@@ -10,11 +10,11 @@ export class MemSpecificationRepository implements SpecificationRepository {
     return uuidv4();
   }
 
-  store(specification: Specification): void {
+  async store(specification: Specification): Promise<void> {
     this.specification.push(specification);
   }
 
-  findByName(name: string): Specification {
+  async findByName(name: string): Promise<Specification> {
     const specification = this.specification.find((s) => s.name === name);
     return specification;
   }
