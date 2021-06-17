@@ -6,15 +6,20 @@
   "scripts": {
     "dev": "ts-node-dev --transpile-only --ignore-watch node_modules --respawn src/presentation/api/server.ts",
     "dev:debug": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/presentation/api/server.ts",
-    "typeorm": "ts-node-dev ./node_modules/typeorm/cli"
+    "typeorm": "ts-node-dev ./node_modules/typeorm/cli",
+    "lint": "eslint . --ext .ts",
+    "lint:fix": "eslint . --ext .ts --fix"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "dependencies": {
     "awilix": "^4.3.4",
+    "bcrypt": "^5.0.1",
     "csv-parse": "^4.16.0",
     "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.2",
     "pg": "^8.6.0",
     "reflect-metadata": "^0.1.13",
@@ -23,7 +28,9 @@
     "uuid": "^8.3.2"
   },
   "devDependencies": {
+    "@types/bcrypt": "^5.0.0",
     "@types/express": "^4.17.12",
+    "@types/jsonwebtoken": "^8.5.1",
     "@types/swagger-ui-express": "^4.1.2",
     "@typescript-eslint/eslint-plugin": "^4.26.1",
     "@typescript-eslint/parser": "^4.26.1",
