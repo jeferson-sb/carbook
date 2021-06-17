@@ -6,7 +6,7 @@ interface ConnectionOptions {
 
 getConnectionOptions().then((options) => {
   const newOptions = options as ConnectionOptions;
-  newOptions.host = 'database';
+  newOptions.host = process.env.DATABASE_HOST;
   createConnection({
     ...options,
   });
