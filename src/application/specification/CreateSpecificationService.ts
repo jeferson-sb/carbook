@@ -1,19 +1,25 @@
 import { Specification } from '../../domain/Specification';
 import { SpecificationRepository } from '../../domain/SpecificationRepository';
 import { ApplicationService } from '../../lib/ApplicationService';
+import { SpecificationDTO } from './payload/SpecificationDTO';
 
-interface SpecificationDTO {
-  name: string;
-  description: string;
-}
+type Dependencies = {
+  specificationRepository: SpecificationRepository;
+};
 
 export class CreateSpecificationService
   implements ApplicationService<SpecificationDTO, void>
 {
-  constructor(private specificationRepository: SpecificationRepository) {}
+  private specificationRepository: SpecificationRepository;
 
-  execute({ name, description }: SpecificationDTO): void {
-    const existingSpecification = this.specificationRepository.findByName(name);
+  constructor({ specificationRepository }: Dependencies) {
+    this.specificationRepository = specificationRepository;
+  }
+
+  async execute({ name, description }: SpecificationDTO): Promise<void> {
+    const existingSpecification = await this.specificationRepository.findByName(
+      name,
+    );
 
     if (existingSpecification) {
       throw new Error('This specification already exists.');
@@ -25,6 +31,6 @@ export class CreateSpecificationService
       description,
     });
 
-    this.specificationRepository.store(specification);
+    await this.specificationRepository.store(specification);
   }
 }
