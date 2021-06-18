@@ -44,7 +44,7 @@ export class AuthenticateUserService
       throw new HTTPError('Email or password incorrect', 401);
     }
 
-    const token = sign({}, process.env.AUTH_SECRET, {
+    const token = sign({}, process.env.AUTH_SECRET || 'secret', {
       subject: existingUser.id,
       expiresIn: '1d',
     });
