@@ -2,7 +2,7 @@ import { Category } from './Category';
 
 export interface CategoryRepository {
   getNextId(): string;
-  store(category: Category): void;
-  findAll(): Category[];
-  findByName(name: string): Category;
+  store(category: Category): Promise<void>;
+  findAll(): Promise<Category[]>;
+  findByName(name: string): Promise<Category>;
 }

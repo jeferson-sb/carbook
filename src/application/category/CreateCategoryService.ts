@@ -4,13 +4,13 @@ import { ApplicationService } from '../../lib/ApplicationService';
 import { CategoryDTO } from './payload/CategoryDTO';
 
 type Dependencies = {
-  categoryRepository: CategoryRepository<Category>;
+  categoryRepository: CategoryRepository;
 };
 
 export class CreateCategoryService
   implements ApplicationService<CategoryDTO, void>
 {
-  private categoryRepository: CategoryRepository<Category>;
+  private categoryRepository: CategoryRepository;
 
   constructor({ categoryRepository }: Dependencies) {
     this.categoryRepository = categoryRepository;
