@@ -4,7 +4,7 @@ import 'express-async-errors';
 import swaggerUi from 'swagger-ui-express';
 
 import expressRoutes from './routes';
-import swaggerFile from '../swagger.json';
+import swaggerFile from './swagger.json';
 import '../../infra/database';
 import { HTTPError } from '../../infra/http/HTTPError';
 
