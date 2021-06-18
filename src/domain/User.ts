@@ -1,3 +1,5 @@
+import { AggregateRoot } from '../lib/AggregateRoot';
+
 interface UserData {
   id: string;
   name: string;
