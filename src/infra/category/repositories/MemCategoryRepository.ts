@@ -3,12 +3,12 @@ import { v4 as uuidv4 } from 'uuid';
 import { Category } from '../../../domain/Category';
 import { CategoryRepository } from '../../../domain/CategoryRepository';
 
-export class MemCategoryRepository implements CategoryRepository<Category> {
+export class MemCategoryRepository implements CategoryRepository {
   private categories: Category[] = [];
 
   private static instance: MemCategoryRepository;
 
-  static getInstance(): CategoryRepository<Category> {
+  static getInstance(): CategoryRepository {
     if (!MemCategoryRepository.instance) {
       MemCategoryRepository.instance = new MemCategoryRepository();
     }
@@ -19,11 +19,11 @@ export class MemCategoryRepository implements CategoryRepository<Category> {
     return uuidv4();
   }
 
-  async store(category: Category): void {
+  async store(category: Category): Promise<void> {
     this.categories.push(category);
   }
 
-  async findAll(): Category[] {
+  async findAll(): Promise<Category[]> {
     return this.categories;
   }
 
