@@ -14,11 +14,15 @@ import { SQLUserRepository } from '../../infra/user/repositories/SQLUserReposito
 import { SpecificationRepository } from '../../domain/SpecificationRepository';
 import { UpdateUserAvatarService } from '../../application/user/UpdateUserAvatarService';
 import { UserRepository } from '../../domain/UserRepository';
+import { MemCarRepository } from '../../infra/car/repositories/MemCarRepository';
+import { CarRepository } from '../../domain/CarRepository';
+import { CreateCarService } from '../../application/car/CreateCarService';
 
 type Container = {
   categoryRepository: CategoryRepository<Category>;
   specificationRepository: SpecificationRepository;
   userRepository: UserRepository;
+  carRepository: CarRepository;
   createCategoryService: CreateCategoryService;
   listCategoryService: ListCategoryService;
   importCategoryService: ImportCategoryService;
@@ -26,6 +30,7 @@ type Container = {
   createUserService: CreateUserService;
   authenticateUserService: AuthenticateUserService;
   updateUserAvatarService: UpdateUserAvatarService;
+  createCarService: CreateCarService;
 };
 
 const container = createContainer<Container>();
@@ -34,6 +39,7 @@ container.register({
   categoryRepository: asClass(SQLCategoryRepository).singleton(),
   specificationRepository: asClass(SQLSpecificationRepository).singleton(),
   userRepository: asClass(SQLUserRepository).singleton(),
+  carRepository: asClass(MemCarRepository).singleton(),
   createCategoryService: asClass(CreateCategoryService).singleton(),
   listCategoryService: asClass(ListCategoryService).singleton(),
   importCategoryService: asClass(ImportCategoryService).singleton(),
@@ -41,6 +47,7 @@ container.register({
   createUserService: asClass(CreateUserService).singleton(),
   authenticateUserService: asClass(AuthenticateUserService),
   updateUserAvatarService: asClass(UpdateUserAvatarService),
+  CreateCarService: asClass(CreateCarService),
 });
 
 export default container;
