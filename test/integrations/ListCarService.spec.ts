@@ -1,7 +1,7 @@
-import { Car } from '../../domain/Car';
-import { CarRepository } from '../../domain/CarRepository';
-import { MemCarRepository } from '../../infra/car/repositories/MemCarRepository';
-import { ListCarService } from './ListCarService';
+import { Car } from '../../src/domain/Car';
+import { CarRepository } from '../../src/domain/CarRepository';
+import { MemCarRepository } from '../../src/infra/car/repositories/MemCarRepository';
+import { ListCarService } from '../../src/application/car/ListCarService';
 
 let listCarService: ListCarService;
 let carRepository: CarRepository;

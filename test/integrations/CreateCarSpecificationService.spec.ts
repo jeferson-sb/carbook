@@ -1,10 +1,10 @@
-import { Car } from '../../domain/Car';
-import { Specification } from '../../domain/Specification';
-import { SpecificationRepository } from '../../domain/SpecificationRepository';
-import { MemCarRepository } from '../../infra/car/repositories/MemCarRepository';
-import { HTTPError } from '../../infra/http/HTTPError';
-import { MemSpecificationRepository } from '../../infra/specification/repositories/MemSpecificationRepository';
-import { CreateCarSpecificationService } from './CreateCarSpecificationService';
+import { Car } from '../../src/domain/Car';
+import { Specification } from '../../src/domain/Specification';
+import { SpecificationRepository } from '../../src/domain/SpecificationRepository';
+import { MemCarRepository } from '../../src/infra/car/repositories/MemCarRepository';
+import { HTTPError } from '../../src/infra/http/HTTPError';
+import { MemSpecificationRepository } from '../../src/infra/specification/repositories/MemSpecificationRepository';
+import { CreateCarSpecificationService } from '../../src/application/car/CreateCarSpecificationService';
 
 let createCarSpecificationService: CreateCarSpecificationService;
 let carRepository: MemCarRepository;
