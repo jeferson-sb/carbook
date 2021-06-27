@@ -25,4 +25,9 @@ export class SQLSpecificationRepository implements SpecificationRepository {
     const specification = await this.repository.findOne({ name });
     return specification;
   }
+
+  async findByIds(ids: string[]): Promise<SpecificationEntity[]> {
+    const specifications = await this.repository.findByIds(ids);
+    return specifications;
+  }
 }

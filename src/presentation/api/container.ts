@@ -17,6 +17,8 @@ import { UserRepository } from '../../domain/UserRepository';
 import { MemCarRepository } from '../../infra/car/repositories/MemCarRepository';
 import { CarRepository } from '../../domain/CarRepository';
 import { CreateCarService } from '../../application/car/CreateCarService';
+import { ListCarService } from '../../application/car/ListCarService';
+import { CreateCarSpecificationService } from '../../application/car/CreateCarSpecificationService';
 
 type Container = {
   categoryRepository: CategoryRepository<Category>;
@@ -31,6 +33,8 @@ type Container = {
   authenticateUserService: AuthenticateUserService;
   updateUserAvatarService: UpdateUserAvatarService;
   createCarService: CreateCarService;
+  listCarService: ListCarService;
+  createCarSpecificationService: CreateCarSpecificationService;
 };
 
 const container = createContainer<Container>();
@@ -47,7 +51,9 @@ container.register({
   createUserService: asClass(CreateUserService).singleton(),
   authenticateUserService: asClass(AuthenticateUserService),
   updateUserAvatarService: asClass(UpdateUserAvatarService),
-  CreateCarService: asClass(CreateCarService),
+  createCarService: asClass(CreateCarService),
+  listCarService: asClass(ListCarService),
+  createCarSpecificationService: asClass(CreateCarSpecificationService),
 });
 
 export default container;

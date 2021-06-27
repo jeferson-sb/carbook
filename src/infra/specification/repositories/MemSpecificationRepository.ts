@@ -18,4 +18,12 @@ export class MemSpecificationRepository implements SpecificationRepository {
     const specification = this.specification.find((s) => s.name === name);
     return specification;
   }
+
+  async findByIds(ids: string[]): Promise<Specification[]> {
+    const allSpecifications = this.specification.filter((spec) =>
+      ids.includes(spec.id),
+    );
+
+    return allSpecifications;
+  }
 }

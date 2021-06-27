@@ -1,4 +1,5 @@
 import { AggregateRoot } from '../lib/AggregateRoot';
+import { Specification } from './Specification';
 
 interface CarData {
   id: string;
@@ -31,6 +32,8 @@ export class Car implements AggregateRoot<string> {
 
   private _category_id: string;
 
+  private _specifications: Specification[];
+
   constructor({
     id,
     name,
@@ -51,6 +54,7 @@ export class Car implements AggregateRoot<string> {
     this._fine_amount = fine_amount;
     this._brand = brand;
     this._category_id = category_id;
+    this._specifications = [];
   }
 
   get id(): string {
@@ -87,5 +91,13 @@ export class Car implements AggregateRoot<string> {
 
   get category_id(): string {
     return this._category_id;
+  }
+
+  get specifications(): Specification[] {
+    return this._specifications;
+  }
+
+  addSpecification(specification: Specification): void {
+    this._specifications.push(specification);
   }
 }
