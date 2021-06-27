@@ -19,6 +19,7 @@ import { CarRepository } from '../../domain/CarRepository';
 import { CreateCarService } from '../../application/car/CreateCarService';
 import { ListCarService } from '../../application/car/ListCarService';
 import { CreateCarSpecificationService } from '../../application/car/CreateCarSpecificationService';
+import { UploadCarImagesService } from '../../application/car/UploadCarImagesService';
 
 type Container = {
   categoryRepository: CategoryRepository<Category>;
@@ -35,6 +36,7 @@ type Container = {
   createCarService: CreateCarService;
   listCarService: ListCarService;
   createCarSpecificationService: CreateCarSpecificationService;
+  uploadCarImagesService: UploadCarImagesService;
 };
 
 const container = createContainer<Container>();
@@ -54,6 +56,7 @@ container.register({
   createCarService: asClass(CreateCarService),
   listCarService: asClass(ListCarService),
   createCarSpecificationService: asClass(CreateCarSpecificationService),
+  uploadCarImagesService: asClass(UploadCarImagesService),
 });
 
 export default container;
