@@ -5,11 +5,12 @@ import swaggerUi from 'swagger-ui-express';
 
 import expressRoutes from './routes';
 import swaggerFile from './swagger.json';
-import '../../infra/database';
+import createConnection from '../../infra/database/index';
 import { HTTPError } from '../../infra/http/HTTPError';
 
 const app = express();
 
+createConnection();
 app.use(express.json());
 app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile));
 app.use(expressRoutes);
