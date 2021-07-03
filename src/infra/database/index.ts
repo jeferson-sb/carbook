@@ -7,9 +7,8 @@ interface ConnectionOptions {
 getConnectionOptions().then((options) => {
   const newOptions = options as ConnectionOptions;
   newOptions.host = process.env.DATABASE_HOST;
-  createConnection({
-    ...options,
-  });
+
+  createConnection({ ...options });
 });
 
 export default async (host = 'database'): Promise<Connection> => {

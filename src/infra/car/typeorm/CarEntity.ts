@@ -8,6 +8,7 @@ import {
   ManyToOne,
   PrimaryColumn,
 } from 'typeorm';
+
 import { CategoryEntity } from '../../category/typeorm/CategoryEntity';
 import { SpecificationEntity } from '../../specification/typeorm/SpecificationEntity';
 
