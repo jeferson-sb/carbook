@@ -1,7 +1,6 @@
 import { asClass, createContainer } from 'awilix';
 
 import { AuthenticateUserService } from '../../application/user/AuthenticateUserService';
-import { Category } from '../../domain/Category';
 import { CategoryRepository } from '../../domain/CategoryRepository';
 import { CreateCategoryService } from '../../application/category/CreateCategoryService';
 import { CreateSpecificationService } from '../../application/specification/CreateSpecificationService';
@@ -14,18 +13,27 @@ import { SQLUserRepository } from '../../infra/user/repositories/SQLUserReposito
 import { SpecificationRepository } from '../../domain/SpecificationRepository';
 import { UpdateUserAvatarService } from '../../application/user/UpdateUserAvatarService';
 import { UserRepository } from '../../domain/UserRepository';
-import { MemCarRepository } from '../../infra/car/repositories/MemCarRepository';
 import { CarRepository } from '../../domain/CarRepository';
 import { CreateCarService } from '../../application/car/CreateCarService';
 import { ListCarService } from '../../application/car/ListCarService';
 import { CreateCarSpecificationService } from '../../application/car/CreateCarSpecificationService';
 import { UploadCarImagesService } from '../../application/car/UploadCarImagesService';
+import { CreateRentalService } from '../../application/rental/CreateRentalService';
+import { RentalRepository } from '../../domain/RentalRepository';
+import { DateProvider } from '../../domain/DateProvider';
+import { DayjsDateProvider } from '../../infra/providers/DayjsDateProvider';
+import { SQLCarRepository } from '../../infra/car/repositories/SQLCarRepository';
+import { SQLRentalRepository } from '../../infra/rental/repositories/SQLRentalRepository';
+import { CarImageRepository } from '../../domain/CarImageRepository';
+import { SQLCarImageRepository } from '../../infra/car/repositories/SQLCarImageRepository';
 
 type Container = {
-  categoryRepository: CategoryRepository<Category>;
+  categoryRepository: CategoryRepository;
   specificationRepository: SpecificationRepository;
   userRepository: UserRepository;
   carRepository: CarRepository;
+  rentalRepository: RentalRepository;
+  carImageRepository: CarImageRepository;
   createCategoryService: CreateCategoryService;
   listCategoryService: ListCategoryService;
   importCategoryService: ImportCategoryService;
@@ -37,6 +45,8 @@ type Container = {
   listCarService: ListCarService;
   createCarSpecificationService: CreateCarSpecificationService;
   uploadCarImagesService: UploadCarImagesService;
+  createRentalService: CreateRentalService;
+  dateProvider: DateProvider;
 };
 
 const container = createContainer<Container>();
@@ -45,7 +55,9 @@ container.register({
   categoryRepository: asClass(SQLCategoryRepository).singleton(),
   specificationRepository: asClass(SQLSpecificationRepository).singleton(),
   userRepository: asClass(SQLUserRepository).singleton(),
-  carRepository: asClass(MemCarRepository).singleton(),
+  carRepository: asClass(SQLCarRepository).singleton(),
+  rentalRepository: asClass(SQLRentalRepository).singleton(),
+  carImageRepository: asClass(SQLCarImageRepository).singleton(),
   createCategoryService: asClass(CreateCategoryService).singleton(),
   listCategoryService: asClass(ListCategoryService).singleton(),
   importCategoryService: asClass(ImportCategoryService).singleton(),
@@ -57,6 +69,8 @@ container.register({
   listCarService: asClass(ListCarService),
   createCarSpecificationService: asClass(CreateCarSpecificationService),
   uploadCarImagesService: asClass(UploadCarImagesService),
+  createRentalService: asClass(CreateRentalService),
+  dateProvider: asClass(DayjsDateProvider),
 });
 
 export default container;

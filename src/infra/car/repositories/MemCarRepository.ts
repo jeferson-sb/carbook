@@ -11,7 +11,13 @@ export class MemCarRepository implements CarRepository {
   }
 
   async store(car: Car): Promise<Car> {
-    this.cars.push(car);
+    const index = this.cars.findIndex((c) => c.id === car.id);
+
+    if (index !== -1) {
+      this.cars[index] = car;
+    } else {
+      this.cars.push(car);
+    }
 
     return car;
   }

@@ -20,7 +20,7 @@ carsRoutes.post('/', ensureAuthenticated, ensureAdmin, carController.store);
 carsRoutes.get('/available', carController.listAvailable);
 carsRoutes.post('/specifications/:id', createCarSpecificationController.handle);
 carsRoutes.post(
-  '/images',
+  '/images/:id',
   ensureAuthenticated,
   ensureAdmin,
   upload.array('images'),
