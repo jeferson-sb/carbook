@@ -6,12 +6,16 @@ interface Request {
   images_name: string[];
 }
 
+type Dependencies = {
+  carImageRepository: CarImageRepository;
+};
+
 export class UploadCarImagesService
   implements ApplicationService<Request, void>
 {
   private carImageRepository: CarImageRepository;
 
-  constructor({ carImageRepository }) {
+  constructor({ carImageRepository }: Dependencies) {
     this.carImageRepository = carImageRepository;
   }
 

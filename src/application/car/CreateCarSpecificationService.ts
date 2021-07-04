@@ -1,5 +1,6 @@
 import { Car } from '../../domain/Car';
 import { CarRepository } from '../../domain/CarRepository';
+import { Specification } from '../../domain/Specification';
 import { SpecificationRepository } from '../../domain/SpecificationRepository';
 import { HTTPError } from '../../infra/http/HTTPError';
 import { ApplicationService } from '../../lib/ApplicationService';
@@ -37,11 +38,13 @@ export class CreateCarSpecificationService
       specifications_id,
     );
 
-    [...specifications].forEach((spec) => {
-      existingCar.addSpecification(spec);
+    const carObj = new Car(existingCar);
+
+    specifications.forEach((spec) => {
+      carObj.addSpecification(new Specification(spec));
     });
 
-    await this.carRepository.store(existingCar);
+    await this.carRepository.store(carObj);
 
     return existingCar;
   }
