@@ -3,7 +3,7 @@ version: '3.9'
 services:
   app:
     build: .
-    container_name: node_api
+    container_name: carbook_api
     restart: always
     ports:
       - 3333:3333
@@ -17,7 +17,7 @@ services:
 
   database:
     image: postgres:13-alpine
-    container_name: database
+    container_name: carbook_database
     restart: always
     ports:
       - 5432:5432
