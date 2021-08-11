@@ -12,7 +12,7 @@ import { SQLSpecificationRepository } from '../../infra/specification/repositori
 import { SQLUserRepository } from '../../infra/user/repositories/SQLUserRepository';
 import { SpecificationRepository } from '../../domain/SpecificationRepository';
 import { UpdateUserAvatarService } from '../../application/user/UpdateUserAvatarService';
-import { UserRepository } from '../../domain/UserRepository';
+import { UserRepository } from '../../domain/user/UserRepository';
 import { CarRepository } from '../../domain/CarRepository';
 import { CreateCarService } from '../../application/car/CreateCarService';
 import { ListCarService } from '../../application/car/ListCarService';
@@ -26,6 +26,9 @@ import { SQLCarRepository } from '../../infra/car/repositories/SQLCarRepository'
 import { SQLRentalRepository } from '../../infra/rental/repositories/SQLRentalRepository';
 import { CarImageRepository } from '../../domain/CarImageRepository';
 import { SQLCarImageRepository } from '../../infra/car/repositories/SQLCarImageRepository';
+import { RefreshTokenService } from '../../application/refresh_token/RefreshTokenService';
+import { UserTokensRepository } from '../../domain/user/UserTokensRepository';
+import { SQLUserTokensRepository } from '../../infra/user/repositories/SQLUserTokensRepository';
 
 type Container = {
   categoryRepository: CategoryRepository;
@@ -47,6 +50,8 @@ type Container = {
   uploadCarImagesService: UploadCarImagesService;
   createRentalService: CreateRentalService;
   dateProvider: DateProvider;
+  refreshTokenService: RefreshTokenService;
+  userTokensRepository: UserTokensRepository;
 };
 
 const container = createContainer<Container>();
@@ -58,6 +63,7 @@ container.register({
   carRepository: asClass(SQLCarRepository).singleton(),
   rentalRepository: asClass(SQLRentalRepository).singleton(),
   carImageRepository: asClass(SQLCarImageRepository).singleton(),
+  userTokensRepository: asClass(SQLUserTokensRepository).singleton(),
   createCategoryService: asClass(CreateCategoryService).singleton(),
   listCategoryService: asClass(ListCategoryService).singleton(),
   importCategoryService: asClass(ImportCategoryService).singleton(),
@@ -70,6 +76,7 @@ container.register({
   createCarSpecificationService: asClass(CreateCarSpecificationService),
   uploadCarImagesService: asClass(UploadCarImagesService),
   createRentalService: asClass(CreateRentalService),
+  refreshTokenService: asClass(RefreshTokenService),
   dateProvider: asClass(DayjsDateProvider),
 });
 
