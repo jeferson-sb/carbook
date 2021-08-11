@@ -1,13 +1,16 @@
 import dayjs from 'dayjs';
 
 import { CreateRentalService } from '../../src/application/rental/CreateRentalService';
+import { CarRepository } from '../../src/domain/CarRepository';
 import { Rental } from '../../src/domain/Rental';
+import { MemCarRepository } from '../../src/infra/car/repositories/MemCarRepository';
 import { DayjsDateProvider } from '../../src/infra/providers/DayjsDateProvider';
 import { MemRentalRepository } from '../../src/infra/rental/repositories/MemRentalRepository';
 
 let createRentalService: CreateRentalService;
 let rentalRepository: MemRentalRepository;
 let dateProvider: DayjsDateProvider;
+let carRepository: CarRepository;
 
 describe('Create Rental', () => {
   const oneDayAfter = dayjs().add(1, 'day').toDate();
@@ -15,9 +18,11 @@ describe('Create Rental', () => {
   beforeEach(() => {
     rentalRepository = new MemRentalRepository();
     dateProvider = new DayjsDateProvider();
+    carRepository = new MemCarRepository();
     createRentalService = new CreateRentalService({
       rentalRepository,
       dateProvider,
+      carRepository,
     });
   });
 

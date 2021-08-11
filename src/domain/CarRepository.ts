@@ -10,4 +10,5 @@ export interface CarRepository {
     name?: string,
   ): Promise<Car[]>;
   findById(id: string): Promise<Car>;
+  makeAvailable(id: string): Promise<void>;
 }

@@ -50,4 +50,10 @@ export class MemCarRepository implements CarRepository {
   async findById(id: string): Promise<Car> {
     return this.cars.find((car) => car.id === id);
   }
+
+  async updateAvailability(id: string, availability: boolean): Promise<void> {
+    const findIndex = this.cars.findIndex((car) => car.id === id);
+    const car = this.cars[findIndex];
+    this.cars[findIndex] = new Car({ ...car, available: availability });
+  }
 }

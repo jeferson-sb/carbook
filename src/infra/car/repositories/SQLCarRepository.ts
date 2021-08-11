@@ -51,4 +51,14 @@ export class SQLCarRepository implements CarRepository {
     const car = await this.repository.findOne(id);
     return car;
   }
+
+  async makeAvailable(id: string): Promise<void> {
+    await this.repository
+      .createQueryBuilder()
+      .update()
+      .set({ available: true })
+      .where('id = :id')
+      .setParameters({ id })
+      .execute();
+  }
 }

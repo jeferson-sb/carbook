@@ -1,3 +1,4 @@
+import { CarRepository } from '../../domain/CarRepository';
 import { DateProvider } from '../../domain/DateProvider';
 import { Rental } from '../../domain/Rental';
 import { RentalRepository } from '../../domain/RentalRepository';
@@ -13,6 +14,7 @@ interface Request {
 type Dependencies = {
   rentalRepository: RentalRepository;
   dateProvider: DateProvider;
+  carRepository: CarRepository;
 };
 
 export class CreateRentalService
@@ -22,9 +24,12 @@ export class CreateRentalService
 
   private dateProvider: DateProvider;
 
-  constructor({ rentalRepository, dateProvider }: Dependencies) {
+  private carRepository: CarRepository;
+
+  constructor({ rentalRepository, dateProvider, carRepository }: Dependencies) {
     this.rentalRepository = rentalRepository;
     this.dateProvider = dateProvider;
+    this.carRepository = carRepository;
   }
 
   async execute({
@@ -34,9 +39,7 @@ export class CreateRentalService
   }: Request): Promise<Rental> {
     const availableCar = await this.rentalRepository.findOpenRentalByCar(carId);
 
-    if (availableCar) {
-      throw new HTTPError('Car is unavailable');
-    }
+    if (availableCar) throw new HTTPError('Car is unavailable');
 
     const rentalOpenToUser = await this.rentalRepository.findOpenRentalByUser(
       userId,
@@ -62,6 +65,8 @@ export class CreateRentalService
         expectedReturnDate,
       }),
     );
+
+    this.carRepository.makeAvailable(rentalId);
 
     return rental;
   }
