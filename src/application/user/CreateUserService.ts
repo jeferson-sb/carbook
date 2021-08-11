@@ -1,7 +1,7 @@
 import { hash } from 'bcrypt';
 
-import { User } from '../../domain/User';
-import { UserRepository } from '../../domain/UserRepository';
+import { User } from '../../domain/user/User';
+import { UserRepository } from '../../domain/user/UserRepository';
 import { ApplicationService } from '../../lib/ApplicationService';
 
 type Dependencies = {

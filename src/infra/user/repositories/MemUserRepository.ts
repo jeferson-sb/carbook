@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
-import { User } from '../../../domain/User';
-import { UserRepository } from '../../../domain/UserRepository';
+import { User } from '../../../domain/user/User';
+import { UserRepository } from '../../../domain/user/UserRepository';
 
 export class MemUserRepository implements UserRepository {
   private users: User[] = [];

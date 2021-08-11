@@ -1,5 +1,5 @@
 import { ApplicationService } from '../../lib/ApplicationService';
-import { UserRepository } from '../../domain/UserRepository';
+import { UserRepository } from '../../domain/user/UserRepository';
 import { deleteFile } from '../../infra/config/file';
 
 interface Request {

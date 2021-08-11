@@ -12,7 +12,7 @@ export async function ensureAdmin(
   request: UserRequest,
   response: Response,
   next: NextFunction,
-) {
+): Promise<void> {
   const { id } = request.user;
   const userRepository = new SQLUserRepository();
   const user = await userRepository.findById(id);

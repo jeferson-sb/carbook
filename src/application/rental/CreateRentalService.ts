@@ -52,7 +52,7 @@ export class CreateRentalService
     const now = this.dateProvider.dateNow();
     const compare = this.dateProvider.compareInHours(now, expectedReturnDate);
 
-    if (Rental.isValidAvailableTime(compare)) {
+    if (!Rental.isValidAvailableTime(compare)) {
       throw new Error('Invalid return time');
     }
 
@@ -66,7 +66,7 @@ export class CreateRentalService
       }),
     );
 
-    this.carRepository.makeAvailable(rentalId);
+    this.carRepository.updateAvailability(rentalId, false);
 
     return rental;
   }

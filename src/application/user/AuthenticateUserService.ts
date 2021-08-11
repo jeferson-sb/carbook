@@ -3,10 +3,16 @@ import { sign } from 'jsonwebtoken';
 
 import { ApplicationService } from '../../lib/ApplicationService';
 import { HTTPError } from '../../infra/http/HTTPError';
-import { UserRepository } from '../../domain/UserRepository';
+import { UserRepository } from '../../domain/user/UserRepository';
+
+import { CONSTANTS } from '../../infra/config/auth';
+import { UserTokensRepository } from '../../domain/user/UserTokensRepository';
+import { DateProvider } from '../../domain/DateProvider';
 
 type Dependencies = {
   userRepository: UserRepository;
+  userTokensRepository: UserTokensRepository;
+  dateProvider: DateProvider;
 };
 
 interface AuthenticateUserDTO {
@@ -20,6 +26,7 @@ interface Response {
     email: string;
   };
   token: string;
+  refresh_token: string;
 }
 
 export class AuthenticateUserService
@@ -27,8 +34,18 @@ export class AuthenticateUserService
 {
   private userRepository: UserRepository;
 
-  constructor({ userRepository }: Dependencies) {
+  private usersTokensRepository: UserTokensRepository;
+
+  private dateProvider: DateProvider;
+
+  constructor({
+    userRepository,
+    userTokensRepository: usersTokensRepository,
+    dateProvider,
+  }: Dependencies) {
     this.userRepository = userRepository;
+    this.usersTokensRepository = usersTokensRepository;
+    this.dateProvider = dateProvider;
   }
 
   async execute({ email, password }: AuthenticateUserDTO): Promise<Response> {
@@ -44,9 +61,33 @@ export class AuthenticateUserService
       throw new HTTPError('Email or password incorrect', 401);
     }
 
-    const token = sign({}, process.env.AUTH_SECRET || 'secret', {
+    const {
+      EXPIRES_IN_TOKEN,
+      EXPIRES_REFRESH_TOKEN_DAYS,
+      EXPIRES_IN_REFRESH_TOKEN,
+      SECRET_TOKEN,
+      SECRET_REFRESH_TOKEN,
+    } = CONSTANTS;
+
+    const token = sign({}, SECRET_TOKEN, {
       subject: existingUser.id,
-      expiresIn: '1d',
+      expiresIn: EXPIRES_IN_TOKEN,
+    });
+
+    const refreshToken = sign({ email }, SECRET_REFRESH_TOKEN, {
+      subject: existingUser.id,
+      expiresIn: EXPIRES_IN_REFRESH_TOKEN,
+    });
+
+    const refresh_token_expires_date = this.dateProvider.addDays(
+      EXPIRES_REFRESH_TOKEN_DAYS,
+    );
+
+    await this.usersTokensRepository.store({
+      id: this.usersTokensRepository.getNextId(),
+      userId: existingUser.id,
+      expiresDate: refresh_token_expires_date,
+      refreshToken,
     });
 
     const tokenReturn: Response = {
@@ -55,6 +96,7 @@ export class AuthenticateUserService
         name: existingUser.name,
         email: existingUser.email,
       },
+      refresh_token: refreshToken,
     };
 
     return tokenReturn;

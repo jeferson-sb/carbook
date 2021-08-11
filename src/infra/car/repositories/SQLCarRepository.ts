@@ -52,11 +52,11 @@ export class SQLCarRepository implements CarRepository {
     return car;
   }
 
-  async makeAvailable(id: string): Promise<void> {
+  async updateAvailability(id: string, availability: boolean): Promise<void> {
     await this.repository
       .createQueryBuilder()
       .update()
-      .set({ available: true })
+      .set({ available: availability })
       .where('id = :id')
       .setParameters({ id })
       .execute();

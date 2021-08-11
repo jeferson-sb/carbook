@@ -16,7 +16,7 @@ class AuthenticateUserController {
 
       return response.status(200).json(token);
     } catch (error) {
-      return response.sendStatus(401);
+      return response.status(401).json({ error: error.message });
     }
   }
 }

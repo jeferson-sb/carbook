@@ -2,7 +2,7 @@ import { Repository, getRepository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
 import { UserEntity } from '../typeorm/UserEntity';
-import { UserRepository } from '../../../domain/UserRepository';
+import { UserRepository } from '../../../domain/user/UserRepository';
 
 interface CreateUserDTO {
   id: string;

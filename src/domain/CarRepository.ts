@@ -10,5 +10,5 @@ export interface CarRepository {
     name?: string,
   ): Promise<Car[]>;
   findById(id: string): Promise<Car>;
-  makeAvailable(id: string): Promise<void>;
+  updateAvailability(id: string, availability: boolean): Promise<void>;
 }
