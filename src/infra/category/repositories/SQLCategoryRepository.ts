@@ -5,9 +5,7 @@ import { CategoryRepository } from '../../../domain/CategoryRepository';
 import { CategoryEntity } from '../typeorm/CategoryEntity';
 import { Category } from '../../../domain/Category';
 
-export class SQLCategoryRepository
-  implements CategoryRepository<CategoryEntity>
-{
+export class SQLCategoryRepository implements CategoryRepository {
   private repository: Repository<CategoryEntity>;
 
   constructor() {
@@ -30,6 +28,11 @@ export class SQLCategoryRepository
 
   async findByName(name: string): Promise<CategoryEntity> {
     const category = await this.repository.findOne({ name });
+    return category;
+  }
+
+  async findById(id: string): Promise<CategoryEntity> {
+    const category = await this.repository.findOne(id);
     return category;
   }
 }

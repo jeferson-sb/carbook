@@ -1,6 +1,6 @@
 import { AggregateRoot } from '../lib/AggregateRoot';
 
-interface RentalData {
+interface RentalProps {
   id: string;
   userId: string;
   carId: string;
@@ -25,14 +25,26 @@ export class Rental implements AggregateRoot<string> {
 
   private _total: number;
 
-  constructor({ id, userId, carId, expectedReturnDate }: RentalData) {
-    this._id = id;
-    this._userId = userId;
-    this._carId = carId;
-    this._startDate = new Date();
-    this._endDate = null;
-    this._total = 0;
-    this._expectedReturnDate = expectedReturnDate;
+  static from({
+    id,
+    userId,
+    carId,
+    expectedReturnDate,
+    startDate,
+    endDate,
+    total,
+  }: RentalProps): Rental {
+    const instance = new Rental();
+
+    instance._id = id;
+    instance._userId = userId;
+    instance._carId = carId;
+    instance._startDate = startDate || new Date();
+    instance._endDate = endDate || null;
+    instance._total = total || 0;
+    instance._expectedReturnDate = expectedReturnDate;
+
+    return instance;
   }
 
   static isValidAvailableTime(dateCompare: number | Date): boolean {

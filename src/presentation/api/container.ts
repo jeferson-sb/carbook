@@ -29,6 +29,8 @@ import { SQLCarImageRepository } from '../../infra/car/repositories/SQLCarImageR
 import { RefreshTokenService } from '../../application/refresh_token/RefreshTokenService';
 import { UserTokensRepository } from '../../domain/user/UserTokensRepository';
 import { SQLUserTokensRepository } from '../../infra/user/repositories/SQLUserTokensRepository';
+import { RefundRentalService } from '../../application/refund/RefundRentalService';
+import { ListRentalByUserService } from '../../application/rental/ListRentalByUserService';
 
 type Container = {
   categoryRepository: CategoryRepository;
@@ -49,8 +51,10 @@ type Container = {
   createCarSpecificationService: CreateCarSpecificationService;
   uploadCarImagesService: UploadCarImagesService;
   createRentalService: CreateRentalService;
+  listRentalByUserService: ListRentalByUserService;
   dateProvider: DateProvider;
   refreshTokenService: RefreshTokenService;
+  refundRentalService: RefundRentalService;
   userTokensRepository: UserTokensRepository;
 };
 
@@ -77,6 +81,8 @@ container.register({
   uploadCarImagesService: asClass(UploadCarImagesService),
   createRentalService: asClass(CreateRentalService),
   refreshTokenService: asClass(RefreshTokenService),
+  refundRentalService: asClass(RefundRentalService),
+  listRentalByUserService: asClass(ListRentalByUserService),
   dateProvider: asClass(DayjsDateProvider),
 });
 

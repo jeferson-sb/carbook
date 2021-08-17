@@ -1,5 +1,7 @@
 import { Car } from '../../domain/Car';
 import { CarRepository } from '../../domain/CarRepository';
+import { CategoryRepository } from '../../domain/CategoryRepository';
+import { HTTPError } from '../../infra/http/HTTPError';
 import { ApplicationService } from '../../lib/ApplicationService';
 
 interface Request {
@@ -14,13 +16,17 @@ interface Request {
 
 type Dependencies = {
   carRepository: CarRepository;
+  categoryRepository: CategoryRepository;
 };
 
 export class CreateCarService implements ApplicationService<Request, Car> {
   private carRepository: CarRepository;
 
-  constructor({ carRepository }: Dependencies) {
+  private categoryRepository: CategoryRepository;
+
+  constructor({ carRepository, categoryRepository }: Dependencies) {
     this.carRepository = carRepository;
+    this.categoryRepository = categoryRepository;
   }
 
   async execute({
@@ -46,8 +52,14 @@ export class CreateCarService implements ApplicationService<Request, Car> {
       category_id,
     });
 
+    const category = this.categoryRepository.findById(category_id);
+
+    if (!category) {
+      throw new HTTPError('This category does not exist');
+    }
+
     if (existingCar) {
-      throw new Error('This car already exists');
+      throw new HTTPError('This car already exists');
     }
 
     await this.carRepository.store(car);

@@ -5,4 +5,5 @@ export interface CategoryRepository {
   store(category: Category): Promise<void>;
   findAll(): Promise<Category[]>;
   findByName(name: string): Promise<Category>;
+  findById(id: string): Promise<Category>;
 }

@@ -53,21 +53,21 @@ export class CreateRentalService
     const compare = this.dateProvider.compareInHours(now, expectedReturnDate);
 
     if (!Rental.isValidAvailableTime(compare)) {
-      throw new Error('Invalid return time');
+      throw new HTTPError('Invalid return time');
     }
 
     const rentalId = this.rentalRepository.getNextId();
-    const rental = await this.rentalRepository.store(
-      new Rental({
-        id: rentalId,
-        userId,
-        carId,
-        expectedReturnDate,
-      }),
-    );
+    const finalRental = Rental.from({
+      id: rentalId,
+      userId,
+      carId,
+      expectedReturnDate,
+    });
+
+    await this.rentalRepository.store(finalRental);
 
     this.carRepository.updateAvailability(rentalId, false);
 
-    return rental;
+    return finalRental;
   }
 }

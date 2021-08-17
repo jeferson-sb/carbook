@@ -12,13 +12,13 @@ export class MemRentalRepository implements RentalRepository {
 
   async findOpenRentalByCar(carId: string): Promise<Rental> {
     return this.rentals.find(
-      (rental) => rental.carId === carId && !rental.endDate,
+      rental => rental.carId === carId && !rental.endDate,
     );
   }
 
   async findOpenRentalByUser(userId: string): Promise<Rental> {
     return this.rentals.find(
-      (rental) => rental.userId === userId && !rental.endDate,
+      rental => rental.userId === userId && !rental.endDate,
     );
   }
 
@@ -26,5 +26,13 @@ export class MemRentalRepository implements RentalRepository {
     this.rentals.push(rental);
 
     return rental;
+  }
+
+  async findById(id: string): Promise<Rental> {
+    return this.rentals.find(rental => rental.id === id);
+  }
+
+  async findByUserId(userId: string): Promise<Rental[]> {
+    return this.rentals.filter(rental => rental.userId === userId);
   }
 }

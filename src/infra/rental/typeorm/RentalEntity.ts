@@ -1,9 +1,21 @@
-import { Column, CreateDateColumn, Entity, PrimaryColumn } from 'typeorm';
+import {
+  Column,
+  CreateDateColumn,
+  Entity,
+  JoinColumn,
+  ManyToOne,
+  PrimaryColumn,
+} from 'typeorm';
+import { CarEntity } from '../../car/typeorm/CarEntity';
 
 @Entity('rentals')
 export class RentalEntity {
   @PrimaryColumn()
   id: string;
+
+  @ManyToOne(() => CarEntity)
+  @JoinColumn({ name: 'car_id' })
+  car: CarEntity;
 
   @Column()
   car_id: string;

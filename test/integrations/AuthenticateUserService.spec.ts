@@ -2,16 +2,28 @@ import { AuthenticateUserService } from '../../src/application/user/Authenticate
 import { CreateUserService } from '../../src/application/user/CreateUserService';
 import { MemUserRepository } from '../../src/infra/user/repositories/MemUserRepository';
 import { HTTPError } from '../../src/infra/http/HTTPError';
+import { DateProvider } from '../../src/domain/DateProvider';
+import { UserTokensRepository } from '../../src/domain/user/UserTokensRepository';
+import { DayjsDateProvider } from '../../src/infra/providers/DayjsDateProvider';
+import { MemUserTokensRepository } from '../../src/infra/user/repositories/MemUserTokensRepository';
 
 let authenticateUserService: AuthenticateUserService;
 let userRepository: MemUserRepository;
 let createUserService: CreateUserService;
+let dateProvider: DateProvider;
+let userTokensRepository: UserTokensRepository;
 
 describe('Authenticate User', () => {
   beforeEach(() => {
     userRepository = new MemUserRepository();
+    userTokensRepository = new MemUserTokensRepository();
+    dateProvider = new DayjsDateProvider();
     createUserService = new CreateUserService({ userRepository });
-    authenticateUserService = new AuthenticateUserService({ userRepository });
+    authenticateUserService = new AuthenticateUserService({
+      userRepository,
+      userTokensRepository,
+      dateProvider,
+    });
   });
 
   it('should be able to authenticate an user', async () => {
