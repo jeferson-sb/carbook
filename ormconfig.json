@@ -5,9 +5,9 @@
   "username": "docker",
   "password": "postgres",
   "database": "carbook",
-  "entities": ["./src/infra/**/typeorm/*.ts"],
-  "migrations": ["./src/infra/database/migrations/*.ts"],
+  "entities": ["./src/modules/**/typeorm/*.ts"],
+  "migrations": ["./src/infrastructure/database/migrations/*.ts"],
   "cli": {
-    "migrationsDir": "./src/infra/database/migrations"
+    "migrationsDir": "./src/infrastructure/database/migrations"
   }
 }
