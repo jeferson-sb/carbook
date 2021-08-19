@@ -4,10 +4,10 @@ import express, { Request, Response } from 'express';
 import 'express-async-errors';
 import swaggerUi from 'swagger-ui-express';
 
+import createConnection from '@infrastructure/database/index';
 import expressRoutes from './routes';
 import swaggerFile from './swagger.json';
-import createConnection from '../../infra/database/index';
-import { HTTPError } from '../../infra/http/HTTPError';
+import { HTTPError } from './errors/HTTPError';
 
 const app = express();
 

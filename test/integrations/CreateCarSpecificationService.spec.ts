@@ -1,10 +1,10 @@
-import { Car } from '../../src/domain/Car';
-import { Specification } from '../../src/domain/Specification';
-import { SpecificationRepository } from '../../src/domain/SpecificationRepository';
-import { MemCarRepository } from '../../src/infra/car/repositories/MemCarRepository';
-import { HTTPError } from '../../src/infra/http/HTTPError';
-import { MemSpecificationRepository } from '../../src/infra/specification/repositories/MemSpecificationRepository';
-import { CreateCarSpecificationService } from '../../src/application/car/CreateCarSpecificationService';
+import { Car } from '@modules/car/domain/Car';
+import { Specification } from '@modules/specification/domain/Specification';
+import { SpecificationRepository } from '@modules/specification/domain/SpecificationRepository';
+import { MemCarRepository } from '@modules/car/infra/repositories/MemCarRepository';
+import { HTTPError } from '@presentation/api/errors/HTTPError';
+import { MemSpecificationRepository } from '@modules/specification/infra/repositories/MemSpecificationRepository';
+import { CreateCarSpecificationService } from '@modules/car/app/CreateCarSpecificationService';
 
 let createCarSpecificationService: CreateCarSpecificationService;
 let carRepository: MemCarRepository;
@@ -44,16 +44,16 @@ describe('Create Car Specification', () => {
 
     const specification = await specificationRepository.findByName('spec');
 
-    const specifications_id = [specification.id];
+    const specifications_id = [specification?.id ?? '12345'];
 
     await createCarSpecificationService.execute({
       car_id: car.id,
       specifications_id,
     });
 
-    const c = await carRepository.findByLicensePlate('ABC-1234');
-    expect(c).toHaveProperty('specifications');
-    expect(c.specifications.length).toBe(1);
+    const carByLicense = await carRepository.findByLicensePlate('ABC-1234');
+    expect(carByLicense).toHaveProperty('specifications');
+    expect(carByLicense?.specifications.length).toBe(1);
   });
 
   it('should not be able to add a new specification to a non-existing car', async () => {

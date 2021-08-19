@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import container from '../../container';
+import { container } from '@modules/car/container';
 
 interface ListQueryRequest extends Request {
   query: {

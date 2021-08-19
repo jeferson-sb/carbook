@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import container from '../../container';
+import { container } from '@modules/specification/container';
 
 class CreateCarSpecificationController {
   async handle(request: Request, response: Response): Promise<Response> {

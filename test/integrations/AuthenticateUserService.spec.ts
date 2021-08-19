@@ -1,11 +1,11 @@
-import { AuthenticateUserService } from '../../src/application/user/AuthenticateUserService';
-import { CreateUserService } from '../../src/application/user/CreateUserService';
-import { MemUserRepository } from '../../src/infra/user/repositories/MemUserRepository';
-import { HTTPError } from '../../src/infra/http/HTTPError';
-import { DateProvider } from '../../src/domain/DateProvider';
-import { UserTokensRepository } from '../../src/domain/user/UserTokensRepository';
-import { DayjsDateProvider } from '../../src/infra/providers/DayjsDateProvider';
-import { MemUserTokensRepository } from '../../src/infra/user/repositories/MemUserTokensRepository';
+import { AuthenticateUserService } from '@modules/auth/app/AuthenticateUserService';
+import { CreateUserService } from '@modules/user/app/CreateUserService';
+import { MemUserRepository } from '@modules/user/infra/repositories/MemUserRepository';
+import { HTTPError } from '@presentation/api/errors/HTTPError';
+import { DateProvider } from '@lib/DateProvider';
+import { UserTokensRepository } from '@modules/user/domain/UserTokensRepository';
+import { DayjsDateProvider } from '@infrastructure/providers/DayjsDateProvider';
+import { MemUserTokensRepository } from '@modules/user/infra/repositories/MemUserTokensRepository';
 
 let authenticateUserService: AuthenticateUserService;
 let userRepository: MemUserRepository;

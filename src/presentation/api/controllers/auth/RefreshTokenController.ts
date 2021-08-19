@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import container from '../../container';
+import { container } from '@modules/auth/container';
 
 const refreshTokenController = async (
   request: Request,

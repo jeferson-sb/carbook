@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 
-import { SQLUserRepository } from '../../../infra/user/repositories/SQLUserRepository';
+import { SQLUserRepository } from '@modules/user/infra/repositories/SQLUserRepository';
 
 interface UserRequest extends Request {
   user: {

@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import container from '../../container';
+import { container } from '@modules/category/container';
 
 class CategoryController {
   async store(request: Request, response: Response): Promise<Response> {

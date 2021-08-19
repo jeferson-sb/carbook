@@ -1,10 +1,9 @@
 import { NextFunction, Request, Response } from 'express';
 import { verify } from 'jsonwebtoken';
 
-import { HTTPError } from '../../../infra/http/HTTPError';
-import { SQLUserTokensRepository } from '../../../infra/user/repositories/SQLUserTokensRepository';
-
-import { CONSTANTS } from '../../../infra/config/auth';
+import { CONSTANTS } from '@config/auth';
+import { SQLUserTokensRepository } from '@modules/user/infra/repositories/SQLUserTokensRepository';
+import { HTTPError } from '../errors/HTTPError';
 
 interface JWTPayload {
   sub: string;

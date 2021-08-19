@@ -1,14 +1,22 @@
-import { CreateCarService } from '../../src/application/car/CreateCarService';
-import { CarRepository } from '../../src/domain/CarRepository';
-import { MemCarRepository } from '../../src/infra/car/repositories/MemCarRepository';
+import { CreateCarService } from '@modules/car/app/CreateCarService';
+import { CarRepository } from '@modules/car/domain/CarRepository';
+import { CategoryRepository } from '@modules/category/domain/CategoryRepository';
+import { MemCarRepository } from '@modules/car/infra/repositories/MemCarRepository';
+import { MemCategoryRepository } from '@modules/category/infra/repositories/MemCategoryRepository';
+import { HTTPError } from '@presentation/api/errors/HTTPError';
 
 let createCarService: CreateCarService;
 let carRepository: CarRepository;
+let categoryRepository: CategoryRepository;
 
 describe('Create car', () => {
   beforeEach(() => {
     carRepository = new MemCarRepository();
-    createCarService = new CreateCarService({ carRepository });
+    categoryRepository = new MemCategoryRepository();
+    createCarService = new CreateCarService({
+      carRepository,
+      categoryRepository,
+    });
   });
 
   it('should be able to create a new user', async () => {
@@ -44,7 +52,7 @@ describe('Create car', () => {
         brand: 'Brand',
         category_id: 'category',
       });
-    }).rejects.toBeInstanceOf(Error);
+    }).rejects.toBeInstanceOf(HTTPError);
   });
 
   it('should be able to create a car with available true by default', async () => {

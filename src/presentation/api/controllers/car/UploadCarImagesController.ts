@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import container from '../../container';
+import { container } from '@modules/car/container';
 
 type File = {
   filename: string;
@@ -17,7 +17,7 @@ class UploadCarImagesController {
       const images = request.files;
 
       const { uploadCarImagesService } = container.cradle;
-      const images_name = images.map((file) => file.filename);
+      const images_name = images.map(file => file.filename);
 
       await uploadCarImagesService.execute({
         car_id,

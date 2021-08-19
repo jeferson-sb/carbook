@@ -1,12 +1,12 @@
 import dayjs from 'dayjs';
 
-import { CreateRentalService } from '../../src/application/rental/CreateRentalService';
-import { Car } from '../../src/domain/Car';
-import { CarRepository } from '../../src/domain/CarRepository';
-import { MemCarRepository } from '../../src/infra/car/repositories/MemCarRepository';
-import { HTTPError } from '../../src/infra/http/HTTPError';
-import { DayjsDateProvider } from '../../src/infra/providers/DayjsDateProvider';
-import { MemRentalRepository } from '../../src/infra/rental/repositories/MemRentalRepository';
+import { HTTPError } from '@presentation/api/errors/HTTPError';
+import { CreateRentalService } from '@modules/rental/app/CreateRentalService';
+import { Car } from '@modules/car/domain/Car';
+import { CarRepository } from '@modules/car/domain/CarRepository';
+import { MemCarRepository } from '@modules/car/infra/repositories/MemCarRepository';
+import { DayjsDateProvider } from '@infrastructure/providers/DayjsDateProvider';
+import { MemRentalRepository } from '@modules/rental/infra/repositories/MemRentalRepository';
 
 let createRentalService: CreateRentalService;
 let rentalRepository: MemRentalRepository;
@@ -14,7 +14,7 @@ let dateProvider: DayjsDateProvider;
 let carRepository: CarRepository;
 
 describe('Create Rental', () => {
-  const oneDayAfter = dayjs().add(1, 'day').toDate();
+  const oneDayAfter = dayjs().add(2, 'day').toDate();
 
   beforeEach(() => {
     rentalRepository = new MemRentalRepository();

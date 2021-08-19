@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 
-import container from '../../container';
+import { container } from '@modules/auth/container';
 
 class AuthenticateUserController {
   async authenticate(request: Request, response: Response): Promise<Response> {
