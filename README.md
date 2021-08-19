@@ -4,12 +4,6 @@
 
 Carbook is a Node REST API for registering and renting cars
 
-TODO:
-
-- [ ] Refactor controller to be functions
-- [ ] Return domain objects from repositories
-- [ ] Make License plate its own Value Object
-
 ## Quick start
 
 ### Installation

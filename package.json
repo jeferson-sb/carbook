@@ -7,7 +7,7 @@
     "dev": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules --respawn src/presentation/api/server.ts",
     "dev:debug": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/presentation/api/server.ts",
     "typeorm": "ts-node-dev ./node_modules/typeorm/cli",
-    "seed": "ts-node-dev --transpile-only src/infra/database/seed/admin.ts",
+    "seed": "ts-node-dev --transpile-only src/infrastructure/database/seed/admin.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "test": "jest"
