@@ -66,7 +66,7 @@ export class SendForgotPasswordMailService
 
     const variables = {
       name: user.name,
-      link: `${process.env.FORGOT_MAIL_URL}`,
+      link: `${process.env.FORGOT_MAIL_URL}${refreshToken}`,
     };
 
     await this.mailProvider.sendMail({

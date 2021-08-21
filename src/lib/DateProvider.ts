@@ -5,4 +5,5 @@ export interface DateProvider {
   addDays(days: number): Date;
   compareInDays(startDate: Date, endDate: Date): number;
   addHours(hours: number): Date;
+  compareIfBefore(startDate: Date, endDate: Date): boolean;
 }

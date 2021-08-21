@@ -20,4 +20,5 @@ export interface UserTokensRepository {
     refreshToken: string,
   ): Promise<UserTokens | null>;
   deleteById(id: string): Promise<void>;
+  findByRefreshToken(refreshToken: string): Promise<UserTokens | null>;
 }

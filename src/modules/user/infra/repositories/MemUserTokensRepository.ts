@@ -43,4 +43,11 @@ export class MemUserTokensRepository implements UserTokensRepository {
 
     this.userTokens.splice(index, 1);
   }
+
+  async findByRefreshToken(refreshToken: string): Promise<UserTokens | null> {
+    const userTokens = this.userTokens.find(
+      user => user.refreshToken === refreshToken,
+    );
+    return userTokens || null;
+  }
 }

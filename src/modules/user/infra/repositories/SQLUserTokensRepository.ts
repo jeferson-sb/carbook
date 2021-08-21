@@ -1,3 +1,4 @@
+import { UserTokens } from '@modules/user/domain/UserTokens';
 import { Repository, getRepository } from 'typeorm';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -46,6 +47,16 @@ export class SQLUserTokensRepository implements UserTokensRepository {
     });
 
     return usersTokens;
+  }
+
+  async findByRefreshToken(refreshToken: string): Promise<UserTokens | null> {
+    const userToken = await this.repository.findOne({
+      refresh_token: refreshToken,
+    });
+
+    if (!userToken) return null;
+
+    return userToken;
   }
 
   async deleteById(id: string): Promise<void> {

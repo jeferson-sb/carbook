@@ -12,11 +12,13 @@ import { EtherealMailProvider } from '@infrastructure/providers/EtherealMailProv
 import { AuthenticateUserService } from './app/AuthenticateUserService';
 import { RefreshTokenService } from './app/RefreshTokenService';
 import { SendForgotPasswordMailService } from './app/SendForgotPasswordMailService';
+import { ResetPasswordUserService } from './app/ResetPasswordUserService';
 
 export type Container = {
   authenticateUserService: AuthenticateUserService;
   refreshTokenService: RefreshTokenService;
   sendForgotPasswordMailService: SendForgotPasswordMailService;
+  resetPasswordUserService: ResetPasswordUserService;
   userRepository: UserRepository;
   userTokensRepository: UserTokensRepository;
   dateProvider: DateProvider;
@@ -30,6 +32,7 @@ container.register({
   userTokensRepository: asClass(SQLUserTokensRepository).singleton(),
   authenticateUserService: asClass(AuthenticateUserService).singleton(),
   refreshTokenService: asClass(RefreshTokenService).singleton(),
+  resetPasswordUserService: asClass(ResetPasswordUserService).singleton(),
   sendForgotPasswordMailService: asClass(
     SendForgotPasswordMailService,
   ).singleton(),
