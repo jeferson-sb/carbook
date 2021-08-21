@@ -31,4 +31,8 @@ export class DayjsDateProvider implements DateProvider {
 
     return dayjs(endDateUTC).diff(startDateUTC, 'days');
   }
+
+  addHours(hours: number): Date {
+    return dayjs().add(hours, 'hour').toDate();
+  }
 }
