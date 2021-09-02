@@ -16,9 +16,12 @@ type Payload = {
   email: string;
 };
 
-export class RefreshTokenService
-  implements ApplicationService<unknown, string>
-{
+type Token = {
+  token: string;
+  refreshToken: string;
+};
+
+export class RefreshTokenService implements ApplicationService<string, Token> {
   private userTokensRepository: UserTokensRepository;
 
   private dateProvider: DateProvider;
@@ -28,7 +31,7 @@ export class RefreshTokenService
     this.dateProvider = dateProvider;
   }
 
-  async execute(token: string): Promise<string> {
+  async execute(token: string): Promise<Token> {
     const { email, sub } = verify(
       token,
       CONSTANTS.SECRET_REFRESH_TOKEN,
@@ -60,6 +63,11 @@ export class RefreshTokenService
       userId,
     });
 
-    return refreshToken;
+    const newToken = sign({}, CONSTANTS.SECRET_TOKEN, {
+      subject: userId,
+      expiresIn: CONSTANTS.EXPIRES_IN_TOKEN,
+    });
+
+    return { refreshToken, token: newToken };
   }
 }

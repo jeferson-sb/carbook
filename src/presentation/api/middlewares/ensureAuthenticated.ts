@@ -27,10 +27,7 @@ export async function ensureAuthenticated(
   const [, token] = authHeader.split(' ');
 
   try {
-    const { sub: userId } = verify(
-      token,
-      CONSTANTS.SECRET_REFRESH_TOKEN,
-    ) as JWTPayload;
+    const { sub: userId } = verify(token, CONSTANTS.SECRET_TOKEN) as JWTPayload;
 
     const userTokensRepository = new SQLUserTokensRepository();
     const user = await userTokensRepository.findByUserIdAndToken(userId, token);
