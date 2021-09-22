@@ -1,4 +1,5 @@
 import { ApplicationService } from '@lib/ApplicationService';
+import { StorageProvider } from '@lib/StorageProvider';
 import { CarImageRepository } from '../domain/CarImageRepository';
 
 interface Request {
@@ -8,6 +9,7 @@ interface Request {
 
 type Dependencies = {
   carImageRepository: CarImageRepository;
+  storageProvider: StorageProvider;
 };
 
 export class UploadCarImagesService
@@ -15,13 +17,17 @@ export class UploadCarImagesService
 {
   private carImageRepository: CarImageRepository;
 
-  constructor({ carImageRepository }: Dependencies) {
+  private storageProvider: StorageProvider;
+
+  constructor({ carImageRepository, storageProvider }: Dependencies) {
     this.carImageRepository = carImageRepository;
+    this.storageProvider = storageProvider;
   }
 
   async execute({ car_id, images_name }: Request): Promise<void> {
     images_name.map(async img => {
       await this.carImageRepository.store(car_id, img);
+      await this.storageProvider.save(img, 'cars');
     });
   }
 }

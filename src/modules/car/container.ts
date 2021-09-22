@@ -9,6 +9,7 @@ import { SQLCarRepository } from './infra/repositories/SQLCarRepository';
 import { UploadCarImagesService } from './app/UploadCarImagesService';
 import { CategoryRepository } from '@modules/category/domain/CategoryRepository';
 import { SQLCategoryRepository } from '@modules/category/infra/repositories/SQLCategoryRepository';
+import { LocalStorageProvider } from '@infrastructure/providers/LocalStorageProvider';
 
 export type Container = {
   carRepository: CarRepository;
@@ -17,6 +18,7 @@ export type Container = {
   createCarService: CreateCarService;
   listCarService: ListCarService;
   uploadCarImagesService: UploadCarImagesService;
+  storageProvider: StorageProvider;
 };
 
 const container = createContainer<Container>();
@@ -28,6 +30,7 @@ container.register({
   createCarService: asClass(CreateCarService).singleton(),
   listCarService: asClass(ListCarService).singleton(),
   uploadCarImagesService: asClass(UploadCarImagesService),
+  storageProvider: asClass(LocalStorageProvider).singleton(),
 });
 
 export { container };

@@ -1,6 +1,6 @@
 import { ApplicationService } from '@lib/ApplicationService';
-import { deleteFile } from '@config/file';
 
+import { StorageProvider } from '@lib/StorageProvider';
 import { UserRepository } from '../domain/UserRepository';
 
 interface Request {
@@ -10,6 +10,7 @@ interface Request {
 
 type Dependencies = {
   userRepository: UserRepository;
+  storageProvider: StorageProvider;
 };
 
 export class UpdateUserAvatarService
@@ -17,16 +18,21 @@ export class UpdateUserAvatarService
 {
   private userRepository: UserRepository;
 
-  constructor({ userRepository }: Dependencies) {
+  private storageProvider: StorageProvider;
+
+  constructor({ userRepository, storageProvider }: Dependencies) {
     this.userRepository = userRepository;
+    this.storageProvider = storageProvider;
   }
 
   async execute({ user_id, avatar_file }: Request): Promise<void> {
     const user = await this.userRepository.findById(user_id);
 
     if (user.avatar) {
-      await deleteFile(`./tmp/avatar/${user.avatar}`);
+      await this.storageProvider.delete(user.avatar, 'avatar');
     }
+
+    await this.storageProvider.save(avatar_file, 'avatar');
 
     user.avatar = avatar_file;
 
