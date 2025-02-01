@@ -28,7 +28,7 @@
     "dayjs": "^1.11.1",
     "dotenv": "^8.6.0",
     "esbuild": "^0.14.48",
-    "express": "^4.17.1",
+    "express": "^4.21.2",
     "express-async-errors": "^3.1.1",
     "handlebars": "^4.7.7",
     "jsonwebtoken": "^8.5.1",
